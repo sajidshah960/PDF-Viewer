@@ -4,17 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.DocumentsContract
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.documentfile.provider.DocumentFile
-import java.io.File
-import java.io.FilenameFilter
-import java.util.Arrays
 
 
 class PdfViewerActivity : AppCompatActivity() {
@@ -43,20 +38,23 @@ class PdfViewerActivity : AppCompatActivity() {
         viewPdfButton = findViewById(R.id.btn_view_pdf)
         viewPdfButton.setOnClickListener {
             browsePdfFiles()
-            val pdfFiles: MutableList<File> = getPdfFiles()
-
-// Display the list of PDF files to the user.
-
-// Display the list of PDF files to the user.
-            for (file in pdfFiles) {
-                Log.d("PDF_VIEWER", file.name)
-            }
         }
 
-    }
-    private fun getPdfFiles(): MutableList<File> {
+        // recycler view button
+        val actionRecyclerViewButton = findViewById<Button>(R.id.btn_recycler_view)
+        actionRecyclerViewButton.setOnClickListener {
+            val intent = Intent(this, RecyclerViewActivity::class.java)
+            startActivity(intent)
+        }
 
-    }
+        // slide show button
+        val actionSlideShowButton = findViewById<Button>(R.id.btn_slide_show)
+        actionSlideShowButton.setOnClickListener {
+            val intent = Intent(this, SlideShowActivity::class.java)
+            startActivity(intent)
+        }
+}
+
 
 
 

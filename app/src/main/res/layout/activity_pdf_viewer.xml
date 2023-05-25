@@ -9,11 +9,33 @@
         android:id="@+id/btn_view_pdf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View PDF Files"
+        android:text="Browser PDF Files"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View PDFs in RecyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/btn_view_pdf"
+        app:layout_constraintEnd_toEndOf="@+id/btn_view_pdf"
+        app:layout_constraintStart_toStartOf="@+id/btn_view_pdf"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+    <Button
+        android:id="@+id/btn_slide_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View PDFs in SlideShow"
+        app:layout_constraintBottom_toTopOf="@+id/btn_recycler_view"
+        app:layout_constraintEnd_toEndOf="@+id/btn_recycler_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btn_recycler_view"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,7 +15,7 @@
  */
 
 @file:JvmName("PermissionUtils")
-package com.android.samples.filemanager
+package com.funsoltech.pdfviewer
 
 import android.Manifest
 import android.app.AppOpsManager
@@ -109,6 +109,7 @@ fun checkStoragePermissionApi30(activity: AppCompatActivity): Boolean {
 fun requestStoragePermissionApi30(activity: AppCompatActivity) {
     val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
 
+    val MANAGE_EXTERNAL_STORAGE_PERMISSION_REQUEST = 1
     activity.startActivityForResult(intent, MANAGE_EXTERNAL_STORAGE_PERMISSION_REQUEST)
 }
 
@@ -123,6 +124,7 @@ fun checkStoragePermissionApi19(activity: AppCompatActivity): Boolean {
 @RequiresApi(19)
 fun requestStoragePermissionApi19(activity: AppCompatActivity) {
     val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+    val READ_EXTERNAL_STORAGE_PERMISSION_REQUEST = 2
     ActivityCompat.requestPermissions(
         activity,
         permissions,

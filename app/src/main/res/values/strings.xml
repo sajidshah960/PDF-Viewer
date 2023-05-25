@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">PDF Viewer</string>
+    <string name="go_parent_label">"⬆️ Parent folder"</string>
+    <string name="folder_item">🗂 %1$s</string>
+    <string name="file_item">&#x1F4D5;</string>
 </resources>
