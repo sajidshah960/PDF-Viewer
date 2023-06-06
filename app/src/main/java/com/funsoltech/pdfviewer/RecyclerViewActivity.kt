@@ -14,6 +14,8 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.funsoltech.pdfviewer.databinding.ActivityRecyclerViewBinding
 import java.io.File
 
@@ -31,7 +33,7 @@ class RecyclerViewActivity : AppCompatActivity() {
         binding = ActivityRecyclerViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, mutableListOf<String>())
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
         binding.filesTreeView.adapter = adapter
         binding.filesTreeView.setOnItemClickListener { _, _, position, _ ->
             val selectedItem = filesList[position]

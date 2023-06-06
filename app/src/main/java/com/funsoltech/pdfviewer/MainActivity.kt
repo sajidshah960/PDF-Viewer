@@ -63,6 +63,11 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+                R.id.navigation_fragments -> {
+                    val intent = Intent(this, MainActivityTabView::class.java)
+                    startActivity(intent)
+                    true
+                }
 
                 else -> {
                     val intent = Intent(this, MainActivity::class.java)

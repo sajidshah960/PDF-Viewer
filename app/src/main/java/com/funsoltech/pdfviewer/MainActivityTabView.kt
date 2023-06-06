@@ -8,6 +8,8 @@ import androidx.appcompat.widget.Toolbar
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -29,21 +31,21 @@ class MainActivityTabView : AppCompatActivity() {
             tab.text = "Tab ${position + 1}"
         }.attach()
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-
-        // Handle settings button click
-        toolbar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.action_settings -> {
-                    // show setting menu
-                    loadSettingsFragment()
-                    true
-                }
-                else -> false
-            }
-        }
+//        toolbar = findViewById(R.id.toolbar)
+//        setSupportActionBar(toolbar)
+//
+//
+//        // Handle settings button click
+//        toolbar.setOnMenuItemClickListener { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.action_settings -> {
+//                    // show setting menu
+//                    loadSettingsFragment()
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
 
 
     }
@@ -53,7 +55,7 @@ class MainActivityTabView : AppCompatActivity() {
     }
     private fun loadSettingsFragment() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, SettingsFragment(), "SettingsFragment")
+            .replace(R.id.view_pager, SettingsFragment(), "SettingsFragment")
             .commit()
     }
 }
@@ -91,3 +93,4 @@ class Fragment3 : Fragment(R.layout.fragment_3) {
     // Add any necessary logic or UI components
     // You can define fragment-specific methods and variables here
 }
+
