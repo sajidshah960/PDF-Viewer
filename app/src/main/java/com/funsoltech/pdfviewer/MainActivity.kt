@@ -1,18 +1,27 @@
 package com.funsoltech.pdfviewer
 
 import android.annotation.SuppressLint
+import android.app.AppOpsManager
+import android.app.usage.UsageStatsManager
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Process
 import android.provider.AlarmClock
 import android.provider.MediaStore
+import android.provider.Settings
+import android.text.format.DateUtils
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.documentfile.provider.DocumentFile
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.Calendar
+
+// import appUsageStats.AppsUsageStats
 
 class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView
@@ -38,6 +47,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // create alarm button
+
+        // app stats
+        var appStats  = AppsUsageStats(this)
+
+        appStats.fetchUsageStats()
+
         val actionAlarmButton = findViewById<Button>(R.id.btn_create_alarm)
         actionAlarmButton.setOnClickListener {
             createAlarm("Alarm", 12, 0)
@@ -82,6 +97,47 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    class AppsUsageStats(private val context: Context) {
+        fun fetchUsageStats() {
+            if (!hasPermission()) {
+                requestPermission()
+                return
+            }
+
+            val usageStatsManager = context.getSystemService(Context.USAGE_STATS_SERVICE) as? UsageStatsManager
+            if (usageStatsManager != null) {
+                val calendar = Calendar.getInstance()
+                val endTime = calendar.timeInMillis
+                calendar.add(Calendar.DAY_OF_MONTH, -1) // Fetch usage for the last day
+                val startTime = calendar.timeInMillis
+
+                val usageStats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, startTime, endTime).sortedBy { it.totalTimeInForeground }.reversed()
+                if (usageStats != null && usageStats.isNotEmpty()) {
+                    for (stat in usageStats) {
+                        val packageName = stat.packageName
+                        val totalTimeInForeground = stat.totalTimeInForeground
+                        Log.d("AppUsageFetcher", "Package: $packageName, Time: ${DateUtils.formatElapsedTime(totalTimeInForeground / 1000)}")
+                    }
+                }
+            } else {
+                Log.e("AppUsageFetcher", "UsageStatsManager is null.")
+            }
+        }
+
+        private fun hasPermission(): Boolean {
+            val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as? AppOpsManager
+            val mode = appOps?.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(), context.packageName)
+            return mode == AppOpsManager.MODE_ALLOWED
+        }
+
+        private fun requestPermission() {
+            Toast.makeText(context, "Please grant usage access permission", Toast.LENGTH_LONG).show()
+            val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
+            context.startActivity(intent)
+        }
+
     }
 
     override fun onRequestPermissionsResult(
